@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fivetesting
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fivetesting
+  template:
+    metadata:
+      labels:
+        app: fivetesting
+    spec:
+      containers:
+        - name: fivetesting
+          image: fivetesting:latest
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fivetesting
+spec:
+  selector:
+    app: fivetesting
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
