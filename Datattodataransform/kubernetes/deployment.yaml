@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: datattodataransform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: datattodataransform
+  template:
+    metadata:
+      labels:
+        app: datattodataransform
+    spec:
+      containers:
+        - name: cosmos-transfer
+          image: acrsurenlearning.azurecr.io/cosmos-transfer:latest
+          env:
+            - name: COSMOS_URI
+              value: "https://raglearning1.documents.azure.com:443/"
+            - name: COSMOS_KEY
+              value: "dummy"
+            - name: COSMOS_DB
+              value: "n8n"
+          ports:
+            - containerPort: 8080
