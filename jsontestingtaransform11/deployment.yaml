@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jsontestingtaransform11
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jsontestingtaransform11
+  template:
+    metadata:
+      labels:
+        app: jsontestingtaransform11
+    spec:
+      containers:
+      - name: jsontestingtaransform11
+        image: jsontestingtaransform11:latest
+        ports:
+        - containerPort: 8080
