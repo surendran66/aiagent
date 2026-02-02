@@ -1,0 +1,15 @@
+azure:
+  cosmos:
+    uri: ${COSMOS_URI}
+    key: ${COSMOS_KEY}
+    database: n8n
+    connection-mode: GATEWAY
+
+cosmos:
+  inputContainer: inputdata
+  outputContainer: outputdata
+
+logging:
+  level:
+    root: INFO
+    com.azure: WARN
