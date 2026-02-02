@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4000testing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: 4000testing
+  template:
+    metadata:
+      labels:
+        app: 4000testing
+    spec:
+      containers:
+      - name: 4000testing
+        image: acrsurenlearning.azurecr.io/4000testing:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: JAVA_OPTS
+          value: ""
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: 4000testing-service
+spec:
+  selector:
+    app: 4000testing
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer
