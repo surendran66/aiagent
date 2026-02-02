@@ -1,0 +1,7 @@
+spring:
+  cosmos:
+    uri: ${COSMOS_URI:https://raglearning1.documents.azure.com:443/}
+    key: ${COSMOS_KEY:dummy}
+    database: n8n
+    populate-query-metrics: true
+    connection-mode: GATEWAY
