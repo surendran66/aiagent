@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 9000testing-deployment
+  labels:
+    app: 9000testing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: 9000testing
+  template:
+    metadata:
+      labels:
+        app: 9000testing
+    spec:
+      containers:
+      - name: 9000testing
+        image: acrsurenlearning.azurecr.io/9000testing:latest
+        ports:
+        - containerPort: 8080
+        env: []
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: 9000testing-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: 9000testing
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
