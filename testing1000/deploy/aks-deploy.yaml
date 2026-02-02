@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testing1000
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: testing1000
+  template:
+    metadata:
+      labels:
+        app: testing1000
+    spec:
+      containers:
+        - name: testing1000
+          image: <your-container-registry>/testing1000:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: JAVA_OPTS
+              value: ""
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: testing1000-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: testing1000
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
