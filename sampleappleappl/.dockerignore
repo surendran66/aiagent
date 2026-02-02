@@ -1,7 +1,0 @@
-target
-.git
-.gitignore
-*.iml
-.idea
-*.swp
-.DS_Store
