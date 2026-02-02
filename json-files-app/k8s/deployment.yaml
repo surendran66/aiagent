@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: json-files-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: json-files-app
+  template:
+    metadata:
+      labels:
+        app: json-files-app
+    spec:
+      containers:
+      - name: json-files-app
+        image: json-files-app:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SERVER_PORT
+          value: "8080"
+        volumeMounts:
+        - name: sample-files
+          mountPath: /app/sample
+      volumes:
+      - name: sample-files
+        configMap:
+          name: json-files-sample
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: json-files-sample
+  labels:
+    app: json-files-app
+data:
+  a.txt: |
+    This is file A.
+  sub_b.json: |
+    {"foo":"bar"}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: json-files-app
+spec:
+  type: ClusterIP
+  selector:
+    app: json-files-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
