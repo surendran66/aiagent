@@ -4,8 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class JsonTestingTaransform12Application {
+public class Jsontestingtaransform12Application {
+
     public static void main(String[] args) {
-        SpringApplication.run(JsonTestingTaransform12Application.class, args);
+        SpringApplication.run(Jsontestingtaransform12Application.class, args);
     }
 }
