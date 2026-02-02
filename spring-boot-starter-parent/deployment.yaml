@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: appname-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: appname
+  template:
+    metadata:
+      labels:
+        app: appname
+    spec:
+      containers:
+        - name: appname
+          image: appname:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: COSMOS_URI
+              value: ""
+            - name: COSMOS_KEY
+              value: ""
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: appname-service
+spec:
+  selector:
+    app: appname
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
