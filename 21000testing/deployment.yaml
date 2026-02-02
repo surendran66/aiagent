@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 21000testing
+  labels:
+    app: 21000testing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: 21000testing
+  template:
+    metadata:
+      labels:
+        app: 21000testing
+    spec:
+      containers:
+        - name: 21000testing
+          image: acrsurenlearning.azurecr.io/21000testing:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "default"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: 21000testing-service
+spec:
+  selector:
+    app: 21000testing
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer
