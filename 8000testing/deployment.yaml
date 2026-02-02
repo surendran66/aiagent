@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 8000testing
+  labels:
+    app: 8000testing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: 8000testing
+  template:
+    metadata:
+      labels:
+        app: 8000testing
+    spec:
+      containers:
+      - name: 8000testing
+        image: acrsurenlearning.azurecr.io/8000testing:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: JAVA_OPTS
+          value: ""
+      imagePullSecrets:
+      - name: acr-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: 8000testing-service
+spec:
+  selector:
+    app: 8000testing
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer
