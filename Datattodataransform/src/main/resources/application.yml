@@ -1,0 +1,17 @@
+azure:
+  cosmos:
+    uri: ${COSMOS_DB_URI}
+    key: ${COSMOS_DB_KEY}
+    database: n8n
+    response-headers-enabled: false
+    populate-query-metrics: false
+
+cosmos:
+  input:
+    container: inputdata
+    partition-key: /id
+  output:
+    container: outputdata
+    partition-key: /recordId
+server:
+  port: 8080
