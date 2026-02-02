@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testing123-deployment
+  namespace: ${AKS_NAMESPACE}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: testing123
+  template:
+    metadata:
+      labels:
+        app: testing123
+    spec:
+      containers:
+        - name: testing123
+          image: ${AKS_IMAGE}
+          ports:
+            - containerPort: 8080
+          env:
+            - name: JAVA_OPTS
+              value: ""
