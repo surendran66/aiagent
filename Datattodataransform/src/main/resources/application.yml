@@ -1,0 +1,17 @@
+azure:
+  cosmos:
+    endpoint: ${COSMOS_ENDPOINT:https://raglearning1.documents.azure.com:443/}
+    key: ${COSMOS_KEY:dummy}
+    database: n8n
+    populateQueryMetrics: false
+    connection-policy:
+      connection-mode: GATEWAY
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
+logging:
+  level:
+    com.azure: INFO
+    org.springframework: INFO
