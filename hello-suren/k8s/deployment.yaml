@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
       - name: hello-suren
-        image: hello-suren:latest
+       # FIXED: Added the full ACR login server path
+        image: acrsurenlearning.azurecr.io/hello-suren:latest
         ports:
         - containerPort: 8080
         env:
