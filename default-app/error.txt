@@ -1,0 +1,1 @@
+No application type or stack was provided. Please specify the programming language, framework, or technology stack for your application.
