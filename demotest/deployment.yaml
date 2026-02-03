@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demotest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demotest
+  template:
+    metadata:
+      labels:
+        app: demotest
+    spec:
+      containers:
+      - name: demotest
+        image: acrsurenlearning.azurecr.io/demotest:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: JAVA_OPTS
+          value: ""
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demotest-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: demotest
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
