@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fivetesting
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fivetesting
+  template:
+    metadata:
+      labels:
+        app: fivetesting
+    spec:
+      containers:
+      - name: fivetesting
+        image: acrsurenlearning.azurecr.io/fivetesting:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: JAVA_OPTS
+          value: ""
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fivetesting-service
+spec:
+  selector:
+    app: fivetesting
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP
