@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hellouser-deployment
+  name: hellouser
 spec:
   replicas: 1
   selector:
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: hellouser
-          image: acrsurenlearning.azurecr.io/cosmos-transfer:latest
+          image: acrsurenlearning.azurecr.io/hellouser:latest
           ports:
             - containerPort: 8080
           env:
