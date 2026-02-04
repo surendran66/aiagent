@@ -2,8 +2,8 @@ package com.example.datatransformation.service;
 
 import com.example.datatransformation.model.Inputdata;
 import com.example.datatransformation.model.Outputdata;
-import com.example.datatransformation.repository.InputRecordRepository;
-import com.example.datatransformation.repository.OutputRecordRepository;
+import com.example.datatransformation.repository.InputDataRepository;
+import com.example.datatransformation.repository.OutputDataRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -14,20 +14,20 @@ import java.util.stream.StreamSupport;
 
 @Service
 public class DataTransferService {
-    private final InputRecordRepository inputRecordRepository;
-    private final OutputRecordRepository outputRecordRepository;
+    private final InputDataRepository inputDataRepository;
+    private final OutputDataRepository outputDataRepository;
 
-    public DataTransferService(InputRecordRepository inputRecordRepository, OutputRecordRepository outputRecordRepository) {
-        this.inputRecordRepository = inputRecordRepository;
-        this.outputRecordRepository = outputRecordRepository;
+    public DataTransferService(InputDataRepository inputDataRepository, OutputDataRepository outputDataRepository) {
+        this.inputDataRepository = inputDataRepository;
+        this.outputDataRepository = outputDataRepository;
     }
 
     public List<Outputdata> transferAndTransform() {
-        Iterable<Inputdata> inputIterable = inputRecordRepository.findAll();
-        List<Inputdata> inputRecords = StreamSupport.stream(inputIterable.spliterator(), false).collect(Collectors.toList());
-        List<Outputdata> outputRecords = inputRecords.stream().map(this::transform).collect(Collectors.toList());
-        outputRecordRepository.saveAll(outputRecords);
-        return outputRecords;
+        List<Inputdata> inputList = StreamSupport.stream(inputDataRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
+        List<Outputdata> outputList = inputList.stream().map(this::transform).collect(Collectors.toList());
+        outputDataRepository.saveAll(outputList);
+        return outputList;
     }
 
     public Outputdata transform(Inputdata input) {
@@ -48,12 +48,12 @@ public class DataTransferService {
         Instant completed = Instant.parse(completedTime);
         Duration duration = Duration.between(received, completed);
         long seconds = duration.getSeconds();
-        return seconds / 60.0;
+        return Math.round((seconds / 60.0) * 10.0) / 10.0;
     }
 
     private String extractLastName(String user) {
-        if (user == null || user.isEmpty()) return "";
-        String[] parts = user.trim().split("\\s+");
+        if (user == null || user.trim().isEmpty()) return "";
+        String[] parts = user.trim().split(" ");
         return parts.length > 1 ? parts[parts.length - 1] : parts[0];
     }
 }
