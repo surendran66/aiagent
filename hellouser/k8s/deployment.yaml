@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hellouser-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hellouser
+  template:
+    metadata:
+      labels:
+        app: hellouser
+    spec:
+      containers:
+        - name: hellouser
+          image: acrsurenlearning.azurecr.io/cosmos-transfer:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: COSMOS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cosmos-key-secret
+                  key: COSMOS_KEY
