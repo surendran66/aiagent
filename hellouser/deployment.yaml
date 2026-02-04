@@ -18,8 +18,5 @@ spec:
           ports:
             - containerPort: 8080
           env:
-            - name: COSMOS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: cosmos-key-secret
-                  key: COSMOS_KEY
+            - name: JAVA_OPTS
+              value: ""
