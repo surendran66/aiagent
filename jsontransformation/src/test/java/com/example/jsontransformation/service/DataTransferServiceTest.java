@@ -2,28 +2,34 @@ package com.example.jsontransformation.service;
 
 import com.example.jsontransformation.model.InputRecord;
 import com.example.jsontransformation.model.OutputRecord;
+import com.example.jsontransformation.model.OutputRecord.Sla;
+import com.example.jsontransformation.repository.InputRecordRepository;
+import com.example.jsontransformation.repository.OutputRecordRepository;
 import org.junit.jupiter.api.Test;
-import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DataTransferServiceTest {
-    private final DataTransferService service = new DataTransferService();
-
     @Test
     void testTransform() {
-        InputRecord input = new InputRecord("1", "testdata");
-        OutputRecord output = service.transformForTest(input);
-        assertEquals(input.getId(), output.getId());
-        assertEquals(input.getData(), output.getData());
-        assertNotNull(output.getSla());
-        assertEquals("ACTIVE", output.getSla().getState());
-    }
+        InputRecord input = new InputRecord();
+        input.setId("1");
+        input.setName("Test Name");
+        input.setType("TypeA");
+        input.setStatus("Active");
+        input.setPriority("High");
+        input.setSla("Open");
 
-    @Test
-    void testSlaState() {
-        InputRecord input = new InputRecord("2", "otherdata");
-        List<OutputRecord> outputs = service.transferAndTransform(List.of(input));
-        assertEquals(1, outputs.size());
-        assertEquals("ACTIVE", outputs.get(0).getSla().getState());
+        // Use null for repositories since we only test transform logic
+        DataTransferService service = new DataTransferService(null, null);
+        OutputRecord output = service.transform(input);
+
+        assertNotNull(output);
+        assertEquals("1", output.getId());
+        assertEquals("Test Name", output.getName());
+        assertEquals("TypeA", output.getType());
+        assertEquals("Active", output.getStatus());
+        assertEquals("High", output.getPriority());
+        assertNotNull(output.getSla());
+        assertEquals("Open", output.getSla().getState());
     }
 }
