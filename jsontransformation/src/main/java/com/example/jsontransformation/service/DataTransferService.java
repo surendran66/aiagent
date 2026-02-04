@@ -2,20 +2,37 @@ package com.example.jsontransformation.service;
 
 import com.example.jsontransformation.model.InputRecord;
 import com.example.jsontransformation.model.OutputRecord;
+import com.example.jsontransformation.repository.InputRecordRepository;
+import com.example.jsontransformation.repository.OutputRecordRepository;
 import org.springframework.stereotype.Service;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class DataTransferService {
-    public OutputRecord transformForTest(InputRecord input) {
-        OutputRecord.Sla sla = new OutputRecord.Sla("ACTIVE");
-        return new OutputRecord(input.getId(), input.getData(), sla);
+    private final InputRecordRepository inputRecordRepository;
+    private final OutputRecordRepository outputRecordRepository;
+
+    public DataTransferService(InputRecordRepository inputRecordRepository, OutputRecordRepository outputRecordRepository) {
+        this.inputRecordRepository = inputRecordRepository;
+        this.outputRecordRepository = outputRecordRepository;
     }
 
-    public List<OutputRecord> transferAndTransform(List<InputRecord> inputRecords) {
-        return inputRecords.stream()
-                .map(this::transformForTest)
-                .collect(Collectors.toList());
+    public OutputRecord transform(InputRecord input) {
+        OutputRecord.Sla sla = new OutputRecord.Sla(input.getSla());
+        return new OutputRecord(
+                input.getId(),
+                input.getName(),
+                input.getType(),
+                input.getStatus(),
+                input.getPriority(),
+                sla
+        );
+    }
+
+    // Add the missing transferAll method
+    public void transferAll() {
+        inputRecordRepository.findAll().forEach(input -> {
+            OutputRecord output = transform(input);
+            outputRecordRepository.save(output);
+        });
     }
 }
