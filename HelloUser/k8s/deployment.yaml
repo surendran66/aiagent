@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-user-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-user
+  template:
+    metadata:
+      labels:
+        app: hello-user
+    spec:
+      containers:
+      - name: hello-user
+        image: acrsurenlearning.azurecr.io/cosmos-transfer:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: COSMOS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: cosmos-key-secret
+              key: COSMOS_KEY
