@@ -13,7 +13,7 @@
     <artifactId>jsontransformation</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>jsontransformation</name>
-    <description>Spring Boot JSON Transformation with Azure Cosmos DB</description>
+    <description>Spring Boot Cosmos DB JSON Transformation</description>
     <properties>
         <java.version>17</java.version>
         <spring.boot.version>3.2.4</spring.boot.version>
@@ -50,8 +50,21 @@
             <version>${azure.cosmos.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.25.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.2.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.10.2</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
