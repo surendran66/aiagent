@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jsontransformation
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jsontransformation
+  template:
+    metadata:
+      labels:
+        app: jsontransformation
+    spec:
+      containers:
+        - name: jsontransformation
+          image: acrsurenlearning.azurecr.io/jsontransformation:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: COSMOS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cosmos-key-secret
+                  key: COSMOS_KEY
