@@ -1,0 +1,23 @@
+package com.example.hellouser.controller;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.web.servlet.MockMvc;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+
+@WebMvcTest(HelloUserController.class)
+class HelloUserControllerTest {
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Test
+    void sayHello_ReturnsHelloName() throws Exception {
+        mockMvc.perform(get("/Suren"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("hello Suren"));
+    }
+}
