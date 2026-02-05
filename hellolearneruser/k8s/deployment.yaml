@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hellolearneruser
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hellolearneruser
+  template:
+    metadata:
+      labels:
+        app: hellolearneruser
+    spec:
+      containers:
+        - name: hellolearneruser
+          image: acrsurenlearning.azurecr.io/hellolearneruser:latest
+          ports:
+            - containerPort: 8080
