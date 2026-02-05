@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: datatojsontransformationoptum
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: datatojsontransformationoptum
+  template:
+    metadata:
+      labels:
+        app: datatojsontransformationoptum
+    spec:
+      containers:
+        - name: datatojsontransformationoptum
+          image: acrsurenlearning.azurecr.io/datatojsontransformationoptum:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: COSMOS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cosmos-key-secret
+                  key: cosmos-key
