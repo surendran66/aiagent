@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hellousero
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hellousero
+  template:
+    metadata:
+      labels:
+        app: hellousero
+    spec:
+      containers:
+      - name: hellousero
+        image: acrsurenlearning.azurecr.io/hellousero:latest
+        ports:
+        - containerPort: 8080
