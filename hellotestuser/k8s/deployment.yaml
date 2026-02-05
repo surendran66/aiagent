@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hellotestuser
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hellotestuser
+  template:
+    metadata:
+      labels:
+        app: hellotestuser
+    spec:
+      containers:
+        - name: hellotestuser
+          image: acrsurenlearning.azurecr.io/hellotestuser:latest
+          ports:
+            - containerPort: 8080
