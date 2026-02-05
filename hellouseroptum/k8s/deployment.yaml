@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hellouseroptum
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hellouseroptum
+  template:
+    metadata:
+      labels:
+        app: hellouseroptum
+    spec:
+      containers:
+        - name: hellouseroptum
+          image: acrsurenlearning.azurecr.io/hellouseroptum:latest
+          ports:
+            - containerPort: 8080
