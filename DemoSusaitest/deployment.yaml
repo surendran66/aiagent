@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demosusaitest-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demosusaitest
+  template:
+    metadata:
+      labels:
+        app: demosusaitest
+    spec:
+      containers:
+      - name: demosusaitest
+        image: acrsurenlearning.azurecr.io/demosusaitest:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "default"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demosusaitest-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    app: demosusaitest
